@@ -57,20 +57,13 @@ bool HideAd::isExecution()
 	SHELLEXECUTEINFO sInfo;
 	if (hWnd == NULL)
 	{
-	
 		ZeroMemory(&sInfo, sizeof(SHELLEXECUTEINFO));
 		sInfo.cbSize = sizeof(SHELLEXECUTEINFO);
 		sInfo.nShow = SW_SHOW;
-	//	sInfo.fMask =  SEE_MASK_WAITFORINPUTIDLE;
 		sInfo.lpFile = "C:\\Program Files (x86)\\Kakao\\KakaoTalk\\KakaoTalk.exe";
 		ShellExecuteEx(&sInfo);
-		Sleep(6000);
-		//sInfo.hProcess;
-		//sInfo.hwnd;
-		//WaitForInputIdle(sInfo.hProcess,50000);
-		//WaitForSingleObject(sInfo.hProcess, INFINITE);
+		Sleep(10000);
 	}
-	
 	
 	return false;
 }
