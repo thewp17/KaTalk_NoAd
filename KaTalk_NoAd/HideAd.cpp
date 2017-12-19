@@ -32,8 +32,11 @@ HideAd::HideAd()
 	}
 
 	// 랜덤으로 팝업되는 오른쪽 하단의 투명 광고
-	hwnd = FindWindow(NULL, "FAKE_WND_REACHPOP");
-	SendMessage(hwnd, WM_CLOSE, 0, 0);
+	HWND hwnd_fake = FindWindow(NULL, "FAKE_WND_REACHPOP");
+	if (hwnd_fake != NULL) SendMessage(hwnd_fake, WM_CLOSE, 0, 0);
+
+	HWND hwnd_eva = FindWindow(NULL, "EVA_Window");
+	if (hwnd_eva != NULL) SendMessage(hwnd_eva, WM_CLOSE, 0, 0);
 }
 
 
