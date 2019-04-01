@@ -7,6 +7,6 @@ public:
 
 private:
 	HWND KaTalkHWnd();
-	bool isExecution();
+	bool ExecuteKaKao();
 };
 

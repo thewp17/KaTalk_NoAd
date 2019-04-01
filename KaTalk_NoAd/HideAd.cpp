@@ -14,30 +14,33 @@ BOOL CALLBACK EnumWindowProc(HWND hwnd, LPARAM lParam)
 
 HideAd::HideAd()
 {
-	//	EnumWindows(EnumWindowProc, 0);
-	isExecution();
-
 	HWND hwnd = KaTalkHWnd();
-
-	if (IsWindowVisible(hwnd))
+	
+	if (hwnd == nullptr)
 	{
-		RECT rect;
-		GetWindowRect(hwnd, &rect);
-		
-		HWND childAD = FindWindowEx(hwnd, nullptr, "EVA_Window", nullptr);
-		ShowWindow(childAD, SW_HIDE);
-		SetWindowPos(childAD, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE);
-		
-		HWND mainview = FindWindowEx(hwnd, nullptr, "EVA_ChildWindow", nullptr);
-		while (mainview != nullptr)
+		ExecuteKaKao();
+		return;
+	}
+
+	ShowWindow(hwnd, SW_NORMAL);
+	BringWindowToTop(hwnd);
+
+	RECT rect;
+	GetWindowRect(hwnd, &rect);
+
+	HWND childAD = FindWindowEx(hwnd, nullptr, "EVA_Window", nullptr);
+	ShowWindow(childAD, SW_HIDE);
+	SetWindowPos(childAD, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE);
+
+	HWND mainview = FindWindowEx(hwnd, nullptr, "EVA_ChildWindow", nullptr);
+	while (mainview != nullptr)
+	{
+		TCHAR name[15] = "";
+		GetWindowText(mainview, name, 15);
+		if (0 == _tcscmp(name, "OnlineMainView"))
 		{
-			TCHAR name[15] = "";
-			GetWindowText(mainview, name, 15);
-			if (0 == _tcscmp(name, "OnlineMainView"))
-			{
-				MoveWindow(mainview, 0, 30, (rect.right - rect.left), (rect.bottom - rect.top - 30), TRUE);
-				break;
-			}
+			MoveWindow(mainview, 0, 30, (rect.right - rect.left), (rect.bottom - rect.top - 30), TRUE);
+			break;
 		}
 	}
 
@@ -61,20 +64,19 @@ HWND HideAd::KaTalkHWnd()
 	return hWnd;
 }
 
-bool HideAd::isExecution()
+bool HideAd::ExecuteKaKao()
 {
-	HWND hWnd = KaTalkHWnd();
+	
 	SHELLEXECUTEINFO sInfo;
-	if (hWnd == NULL)
-	{
-		ZeroMemory(&sInfo, sizeof(SHELLEXECUTEINFO));
-		sInfo.cbSize = sizeof(SHELLEXECUTEINFO);
-		sInfo.nShow = SW_SHOW;
-		sInfo.lpFile = "C:\\Program Files (x86)\\Kakao\\KakaoTalk\\KakaoTalk.exe";
-		ShellExecuteEx(&sInfo);
-		
-		MessageBox(nullptr, "카카오톡이 곧 실행됩니다. 실행 후 다시 시작하세요.", "확인", MB_OK);
-	}
+	
+	ZeroMemory(&sInfo, sizeof(SHELLEXECUTEINFO));
+	sInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+	sInfo.nShow = SW_SHOW;
+	sInfo.lpFile = "C:\\Program Files (x86)\\Kakao\\KakaoTalk\\KakaoTalk.exe";
+	ShellExecuteEx(&sInfo);
+
+	MessageBox(nullptr, "카카오톡이 곧 실행됩니다. 로그인 후 다시 시작하세요.", "확인", MB_OK);
+
 
 	return false;
 }
