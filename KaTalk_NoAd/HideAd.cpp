@@ -75,7 +75,7 @@ bool HideAd::ExecuteKaKao()
 	sInfo.lpFile = "C:\\Program Files (x86)\\Kakao\\KakaoTalk\\KakaoTalk.exe";
 	ShellExecuteEx(&sInfo);
 
-	MessageBox(nullptr, "카카오톡이 곧 실행됩니다. 로그인 후 다시 시작하세요.", "확인", MB_OK);
+	//MessageBox(nullptr, "카카오톡이 곧 실행됩니다. 로그인 후 다시 시작하세요.", "확인", MB_OK);
 
 
 	return false;
