@@ -32,15 +32,18 @@ HideAd::HideAd()
 	ShowWindow(childAD, SW_HIDE);
 	SetWindowPos(childAD, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE);
 
+	HWND childAD2 = FindWindowEx(hwnd, nullptr, "BannerAdWnd", nullptr);
+	ShowWindow(childAD2, SW_HIDE);
+	SetWindowPos(childAD2, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE);
+
 	HWND mainview = FindWindowEx(hwnd, nullptr, "EVA_ChildWindow", nullptr);
-	while (mainview != nullptr)
+	if (mainview != nullptr)
 	{
 		TCHAR name[15] = "";
 		GetWindowText(mainview, name, 15);
 		if (0 == _tcscmp(name, "OnlineMainView"))
 		{
 			MoveWindow(mainview, 0, 30, (rect.right - rect.left), (rect.bottom - rect.top - 30), TRUE);
-			break;
 		}
 	}
 
