@@ -25,16 +25,20 @@ HideAd::HideAd()
 	ShowWindow(hwnd, SW_NORMAL);
 	BringWindowToTop(hwnd);
 
+	auto katalk_processId = GetWindowTask(hwnd);
+	{
+		HWND hWnd2 = FindWindowW(L"EVA_Window_Dblclk", L"");
+		
+		auto processId2 = GetWindowTask(hWnd2);
+		if(katalk_processId == processId2)
+		{
+			ShowWindow(hWnd2, SW_HIDE);
+			//SetWindowPos(childAD, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE);
+		}
+	}
+
 	RECT rect;
 	GetWindowRect(hwnd, &rect);
-
-	HWND childAD = FindWindowEx(hwnd, nullptr, "EVA_Window", nullptr);
-	ShowWindow(childAD, SW_HIDE);
-	SetWindowPos(childAD, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE);
-
-	HWND childAD2 = FindWindowEx(hwnd, nullptr, "BannerAdWnd", nullptr);
-	ShowWindow(childAD2, SW_HIDE);
-	SetWindowPos(childAD2, HWND_BOTTOM, 0, 0, 0, 0, SWP_NOMOVE);
 
 	HWND mainview = FindWindowEx(hwnd, nullptr, "EVA_ChildWindow", nullptr);
 	if (mainview != nullptr)
@@ -62,7 +66,8 @@ HideAd::~HideAd()
 
 HWND HideAd::KaTalkHWnd()
 {
-	HWND hWnd = FindWindow(NULL, "朝朝神套");
+	HWND hWnd = FindWindowW(NULL, L"朝朝神套");
+
 
 	return hWnd;
 }
